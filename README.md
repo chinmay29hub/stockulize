@@ -6,15 +6,14 @@
 
 <br>
 
-Lets visualise stock data using streamlit
-
-Added Download Stock Data feature
-
+#### Live Here : [Stockulize](https://chinmay29hub-stockulize-app-877n99.streamlitapp.com/)
 
 <hr>
 <br>
 
-#### Live Here : [Stockulize](https://chinmay29hub-stockulize-app-877n99.streamlitapp.com/)
+Lets visualise stock data using streamlit
+
+Added Download Stock Data feature
 
 <br>
 

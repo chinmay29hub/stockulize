@@ -4,7 +4,7 @@
 <img src="stockulize.gif" width="75%" height="75%">
 </p>
 
-<br>
+<hr>
 
 #### Live Here : [Stockulize](https://chinmay29hub-stockulize-app-877n99.streamlitapp.com/)
 

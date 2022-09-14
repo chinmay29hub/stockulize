@@ -11,7 +11,7 @@
 <hr>
 <br>
 
-Lets visualise stock data using streamlit
+Lets visualise stock data using StreamLit
 
 Added Download Stock Data feature
 

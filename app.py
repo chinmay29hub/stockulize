@@ -20,9 +20,9 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 with st.sidebar:
     selected_y = option_menu(
         menu_title="Main Menu",
-        options=["Download Stock Data", "Visualisation"],
+        options=["Download Stock Data", "Visualisation", "Upload Your Data"],
         menu_icon=["meta"],
-        icons=["cloud-download-fill", "graph-up-arrow"],
+        icons=["cloud-download-fill", "graph-up-arrow", "cloud-upload-fill"],
         default_index=0,
     )
 
@@ -32,9 +32,12 @@ df = pd.read_csv(
 
 )
 
-st.markdown('[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&duration=3000&pause=500&color=FF4B4B&width=500&lines=Hello+Techies;Visualise+Stocks;Download+Stock+Data;User+Upload+Soon;%40chinmay29hub)](https://git.io/typing-svg)')
+st.markdown('[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&duration=3000&pause=500&color=FF4B4B&width=500&lines=Hello+Techies;Visualize+Stocks;Download+Stock+Data;User+Upload+Too!!;%40chinmay29hub)](https://git.io/typing-svg)')
+
+
 
 if selected_y == "Visualisation":
+    st.subheader("Demo Graphs on Google Data")
     selected = option_menu(
         menu_title=None,
         options=["Open|Close", "Low|High", "Adj Close|Volume"],
@@ -66,30 +69,63 @@ if selected_y == "Visualisation":
 
 if selected_y == "Download Stock Data":
     company = st.text_input('Company Name', placeholder="eg : GOOGL, APPL, etc", type="default", autocomplete=None)
-
-    if (company == ''):
-        company = 'AAPL'
-
     start_date = st.date_input('Start Date', value=None, min_value=None, max_value=None, key=None)
 
     end_date = st.date_input('End Date', value=None, min_value=None, max_value=None, key=None)
 
-    data_df = yf.download(company, start_date, end_date)
-    name = 'your_data' + '.csv'
-    d = data_df.to_csv(name)
+    if st.button("Fetch"):
+        data_df = yf.download(company, start_date, end_date)
+        name = company + '.csv'
+        d = data_df.to_csv(name)
 
-    with open("your_data.csv", "rb") as file:
+        with open(name, "rb") as file:
 
-        btn = st.download_button(
+            btn = st.download_button(
 
-            label="Download Dataset",
+                label="Download Dataset",
 
-            data=file,
+                data=file,
 
-            file_name="your_data.csv",
+                file_name=name,
 
-            mime="text/csv",
+                mime="text/csv",
 
-            )
+                )
+
+if selected_y == "Upload Your Data":
+    st.subheader("Let's Visualize Your Data")
+    data_file = st.file_uploader("Upload stock data as CSV",type=['csv'])
+    if st.button("Process"):
+        if data_file is not None:
+            file_details = {"Filename":data_file.name,"FileType":data_file.type,"FileSize":data_file.size}
+            st.write(file_details)
+
+            df1 = pd.read_csv(data_file)
+            st.dataframe(df1)
+
+            fig_u_1 = px.line(df1, x = 'Date', y = 'Open', title='Open')
+            fig_u_2 = px.line(df1, x = 'Date', y = 'Close', title='Close')
+            fig_u_3 = px.line(df1, x = 'Date', y = 'Low', title='Low')
+            fig_u_4 = px.line(df1, x = 'Date', y = 'High', title='High')
+            fig_u_5 = px.line(df1, x = 'Date', y = 'Adj Close', title='Adj Close')
+            fig_u_6 = px.line(df1, x = 'Date', y = 'Volume', title='Volume')
+            
+            left_column_2, right_column_2 = st.columns(2)
+        
+            
+            left_column_2.plotly_chart(fig_u_1, use_container_width=True)
+            right_column_2.plotly_chart(fig_u_2, use_container_width=True)
+
+        
+            left_column_2.plotly_chart(fig_u_3, use_container_width=True)
+            right_column_2.plotly_chart(fig_u_4, use_container_width=True)
+
+        
+            left_column_2.plotly_chart(fig_u_5, use_container_width=True)
+            right_column_2.plotly_chart(fig_u_6, use_container_width=True)
+            
+            
+
+
 
 

@@ -55,7 +55,6 @@ Remaining work :
 ```
 1) Use Stockulize to download dataset and to not worry about the format.
 
-2) Don't forget to clear cache in the web app hamburger menu if using too much.
 ```
 
 

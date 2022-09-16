@@ -32,7 +32,7 @@ df = pd.read_csv(
 
 )
 
-# st.markdown('[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&duration=3000&pause=500&color=FF4B4B&width=500&lines=Hello+Techies;Visualize+Stocks;Download+Stock+Data;User+Upload+Too!!;%40chinmay29hub)](https://git.io/typing-svg)')
+st.markdown('[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=FF4B4B&width=435&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)](https://git.io/typing-svg)')
 
 
 

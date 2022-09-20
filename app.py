@@ -20,9 +20,9 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 with st.sidebar:
     selected_y = option_menu(
         menu_title="Main Menu",
-        options=["Download Stock Data", "Visualisation", "Upload Your Data"],
+        options=["Download Stock Data", "Visualisation", "Upload Your Data", "Supported Companies"],
         menu_icon=["meta"],
-        icons=["cloud-download-fill", "graph-up-arrow", "cloud-upload-fill"],
+        icons=["cloud-download-fill", "graph-up-arrow", "cloud-upload-fill", "building"],
         default_index=0,
     )
 
@@ -124,7 +124,19 @@ if selected_y == "Upload Your Data":
             left_column_2.plotly_chart(fig_u_5, use_container_width=True)
             right_column_2.plotly_chart(fig_u_6, use_container_width=True)
             
-            
+if selected_y == "Supported Companies":
+    comp = pd.read_csv('support.csv')
+    st.header("Supported Companies")
+    st.subheader("You can refer to the below data frame for getting the company sysmbol.")
+
+    col_list = list(comp["Name"])
+    col_list = tuple(col_list)
+
+    option = st.selectbox(
+    'Choose the company', col_list)
+
+
+    st.dataframe(comp)
 
 
 

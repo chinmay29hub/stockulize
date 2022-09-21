@@ -5,7 +5,7 @@
 </p>
 <br>
 
-#### Live Here : [Stockulize](https://chinmay29hub-visualise-stock-data-app-dy9ak1.streamlitapp.com/)
+#### Live Here : [Stockulize](https://chinmay29hub-stockulize-app-877n99.streamlitapp.com/)
 
 <br>
 <hr>

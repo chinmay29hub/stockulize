@@ -68,7 +68,7 @@ if selected_y == "Visualisation":
         right_column.plotly_chart(fig_6, use_container_width=True)
 
 if selected_y == "Download Stock Data":
-    company = st.text_input('Company Name', placeholder="eg : GOOGL, APPL, etc", type="default", autocomplete=None)
+    company = st.text_input('Company Name', placeholder="eg : GOOGL, AAPL, etc", type="default", autocomplete=None)
     start_date = st.date_input('Start Date', value=None, min_value=None, max_value=None, key=None)
 
     end_date = st.date_input('End Date', value=None, min_value=None, max_value=None, key=None)

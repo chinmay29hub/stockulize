@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import yfinance as yf
 
-import tensorflow as tf
+import tensorflow.keras.models as tf
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
@@ -151,7 +151,7 @@ if selected_y == "ANN":
     dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')
     X_test = dataset_test.iloc[:-1, 1:2].values
     y_test = dataset_test.iloc[1:, 1:2].values
-    ann = tf.keras.models.load_model('ann.h5')
+    ann = tf.load_model('ann.h5')
     y_pred = ann.predict(X_test)
     fig = Figure()
     plt = fig.add_subplot(1, 1, 1)
@@ -167,7 +167,7 @@ if selected_y == "ANN":
     st.image(image, caption='ANN')
 
 if selected_y == "RNN":
-    regressor = tf.keras.models.load_model('rnn_old.h5')
+    regressor = tf.load_model('rnn_old.h5')
     dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
     # creating a numarray that contains the open price of the stock
     trainig_set = dataset_train.iloc[:, 1:2].values
@@ -212,7 +212,7 @@ if selected_y == "RNN":
     st.image(image, caption='RNN')
 
 if selected_y == "RNN_2":
-    regressor = tf.keras.models.load_model('rnn_new.h5')
+    regressor = tf.load_model('rnn_new.h5')
     dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
     # creating a numarray that contains the open price of the stock
     my_train = dataset_train.iloc[:, 1:]

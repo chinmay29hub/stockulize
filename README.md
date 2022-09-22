@@ -3,9 +3,6 @@
 <p align='center'>
 <img src="stockulize.gif" width="75%" height="75%">
 </p>
-<br>
-
-#### Live Here : [Stockulize](https://chinmay29hub-stockulize-app-877n99.streamlitapp.com/)
 
 <br>
 <hr>

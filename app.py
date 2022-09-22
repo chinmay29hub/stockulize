@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import yfinance as yf
 
-import tensorflow.keras.models as tf
+import tensorflow as tf
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
@@ -29,9 +29,9 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 with st.sidebar:
     selected_y = option_menu(
         menu_title="Main Menu",
-        options=["Download Stock Data", "Visualisation", "Upload Your Data", "Supported Companies", "ANN", "RNN", "RNN_2"],
+        options=["Home Page","Download Stock Data", "Visualisation", "Upload Your Data", "Supported Companies", "ANN", "RNN", "RNN_2"],
         menu_icon=["meta"],
-        icons=["cloud-download-fill", "graph-up-arrow", "cloud-upload-fill", "building"],
+        icons=["house-door","cloud-download-fill", "graph-up-arrow", "cloud-upload-fill", "building"],
         default_index=0,
     )
 
@@ -43,6 +43,22 @@ df = pd.read_csv(
 
 st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
 
+
+if selected_y == "Home Page":
+    selected_nav = option_menu(
+        menu_title=None,
+        options=["Home", "About", "Github"],
+        icons=["house-door-fill", "info-circle-fill", "github"],
+        default_index=0,
+        orientation="horizontal",
+    )
+
+    if selected_nav == "Home":
+        st.header("This is homepage")
+    if selected_nav == "About":
+        st.header("This is about page")
+    if selected_nav == "Github":
+        st.header("Github Info")
 
 
 if selected_y == "Visualisation":
@@ -151,7 +167,7 @@ if selected_y == "ANN":
     dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')
     X_test = dataset_test.iloc[:-1, 1:2].values
     y_test = dataset_test.iloc[1:, 1:2].values
-    ann = tf.load_model('ann.h5')
+    ann = tf.keras.models.load_model('ann.h5')
     y_pred = ann.predict(X_test)
     fig = Figure()
     plt = fig.add_subplot(1, 1, 1)
@@ -167,7 +183,7 @@ if selected_y == "ANN":
     st.image(image, caption='ANN')
 
 if selected_y == "RNN":
-    regressor = tf.load_model('rnn_old.h5')
+    regressor = tf.keras.models.load_model('rnn_old.h5')
     dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
     # creating a numarray that contains the open price of the stock
     trainig_set = dataset_train.iloc[:, 1:2].values
@@ -212,7 +228,7 @@ if selected_y == "RNN":
     st.image(image, caption='RNN')
 
 if selected_y == "RNN_2":
-    regressor = tf.load_model('rnn_new.h5')
+    regressor = tf.keras.models.load_model('rnn_new.h5')
     dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
     # creating a numarray that contains the open price of the stock
     my_train = dataset_train.iloc[:, 1:]

@@ -29,8 +29,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 with st.sidebar:
     selected_y = option_menu(
         menu_title="Main Menu",
-        options=["Home Page","Download Stock Data", "Visualisation", "Upload Your Data", "Supported Companies", "ANN", "RNN", "RNN_2"],
-        menu_icon=["meta"],
+        options=["Home Page","Download Stock Data", "Visualisation", "Upload Your Data", "Supported Companies", "ANN", "RNN", "RNN_2", "ANN for user"],
+        menu_icon=["messenger"],
         icons=["house-door","cloud-download-fill", "graph-up-arrow", "cloud-upload-fill", "building"],
         default_index=0,
     )
@@ -41,10 +41,13 @@ df = pd.read_csv(
 
 )
 
-st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
+# st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
 
 
 if selected_y == "Home Page":
+    image = Image.open('img/logo.png')
+
+    st.image(image, width=550, caption=None)
     selected_nav = option_menu(
         menu_title=None,
         options=["Home", "About", "Github"],
@@ -62,6 +65,7 @@ if selected_y == "Home Page":
 
 
 if selected_y == "Visualisation":
+    st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
     st.subheader("Demo Graphs on Google Data")
     selected = option_menu(
         menu_title=None,
@@ -93,6 +97,7 @@ if selected_y == "Visualisation":
         right_column.plotly_chart(fig_6, use_container_width=True)
 
 if selected_y == "Download Stock Data":
+    st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
     company = st.text_input('Company Name', placeholder="eg : GOOGL, AAPL, etc", type="default", autocomplete=None)
     start_date = st.date_input('Start Date', value=None, min_value=None, max_value=None, key=None)
 
@@ -118,6 +123,7 @@ if selected_y == "Download Stock Data":
                 )
 
 if selected_y == "Upload Your Data":
+    st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
     st.subheader("Let's Visualize Your Data")
     data_file = st.file_uploader("Upload stock data as CSV",type=['csv'])
     if st.button("Process"):
@@ -150,6 +156,7 @@ if selected_y == "Upload Your Data":
             right_column_2.plotly_chart(fig_u_6, use_container_width=True)
             
 if selected_y == "Supported Companies":
+    st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
     comp = pd.read_csv('support.csv')
     st.header("Supported Companies")
     st.subheader("You can refer to the below data frame for getting the company sysmbol.")
@@ -280,6 +287,31 @@ if selected_y == "RNN_2":
     image = Image.open('img/RNN2Graph.png')
 
     st.image(image, caption='RNN 2')
+
+if selected_y == "ANN for user":
+    data_file_user = st.file_uploader("Upload stock data as CSV",type=['csv'])
+    if st.button("Predict"):
+        if data_file_user is not None:
+            file_details = {"Filename":data_file_user.name,"FileType":data_file_user.type,"FileSize":data_file_user.size}
+            st.write(file_details)
+
+            dataset_test = pd.read_csv(data_file_user)
+            X_test = dataset_test.iloc[:-1, 1:2].values
+            y_test = dataset_test.iloc[1:, 1:2].values
+            ann = tf.keras.models.load_model('ann.h5')
+            y_pred = ann.predict(X_test)
+            fig = Figure()
+            plt = fig.add_subplot(1, 1, 1)
+            plt.plot(y_test, color='red', label='Real Google Stock Price')
+            plt.plot(y_pred, color='blue', label='Predicted Google Stock Price')
+            plt.set_title('Google Stock Price Prediction')
+            plt.set_xlabel('Time')
+            plt.set_ylabel('Google Stock Price')
+            fig.savefig('user/annGraph.png')
+            
+            image = Image.open('user/annGraph.png')
+
+            st.image(image, caption='Your ANN Graph')
 
 
 

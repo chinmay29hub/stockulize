@@ -29,7 +29,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 with st.sidebar:
     selected_y = option_menu(
         menu_title="Main Menu",
-        options=["Home Page","Download Stock Data", "Visualisation", "Upload Your Data", "Supported Companies", "ANN", "RNN", "RNN_2", "ANN for user"],
+        options=["Home Page","Download Stock Data(Nasdaq)", "Download Indian Stocks(NSE)", "Visualisation", "Upload Your Data", "Supported Companies", "ANN", "RNN", "RNN_2", "ANN for user", "RNN for user"],
         menu_icon=["messenger"],
         icons=["house-door","cloud-download-fill", "graph-up-arrow", "cloud-upload-fill", "building"],
         default_index=0,
@@ -96,9 +96,36 @@ if selected_y == "Visualisation":
         left_column.plotly_chart(fig_5, use_container_width=True)
         right_column.plotly_chart(fig_6, use_container_width=True)
 
-if selected_y == "Download Stock Data":
+if selected_y == "Download Stock Data(Nasdaq)":
     st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
     company = st.text_input('Company Name', placeholder="eg : GOOGL, AAPL, etc", type="default", autocomplete=None)
+    start_date = st.date_input('Start Date', value=None, min_value=None, max_value=None, key=None)
+
+    end_date = st.date_input('End Date', value=None, min_value=None, max_value=None, key=None)
+
+    if st.button("Fetch"):
+        data_df = yf.download(company, start_date, end_date)
+        name = company + '.csv'
+        d = data_df.to_csv(name)
+
+        with open(name, "rb") as file:
+
+            btn = st.download_button(
+
+                label="Download Dataset",
+
+                data=file,
+
+                file_name=name,
+
+                mime="text/csv",
+
+                )
+
+if selected_y == "Download Indian Stocks(NSE)":
+    st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
+    company = st.text_input('Company Name', placeholder="eg : RELIANCE, TATAMOTORS, etc", type="default", autocomplete=None)
+    company = company + ".NS"
     start_date = st.date_input('Start Date', value=None, min_value=None, max_value=None, key=None)
 
     end_date = st.date_input('End Date', value=None, min_value=None, max_value=None, key=None)
@@ -312,6 +339,57 @@ if selected_y == "ANN for user":
             image = Image.open('user/annGraph.png')
 
             st.image(image, caption='Your ANN Graph')
+
+if selected_y == "RNN for user":
+    data_file_user = st.file_uploader("Upload stock data as CSV",type=['csv'])
+    if st.button("Predict"):
+        if data_file_user is not None:
+            file_details = {"Filename":data_file_user.name,"FileType":data_file_user.type,"FileSize":data_file_user.size}
+            st.write(file_details)
+
+            regressor = tf.keras.models.load_model('rnn_old.h5')
+            dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
+            # creating a numarray that contains the open price of the stock
+            trainig_set = dataset_train.iloc[:, 1:2].values
+
+            """### Feature Scaling"""
+
+            # all stock prices will be between 0 and 1
+            sc = MinMaxScaler(feature_range=(0, 1))
+            training_set_scaled = sc.fit_transform(trainig_set)
+            dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
+            dataset_test = pd.read_csv(data_file_user)
+            real_stock_price = dataset_test.iloc[:, 1:2].values
+
+            """### Getting the predicted stock price of 2017"""
+
+            dataset_total = pd.concat(
+                (dataset_train['Open'], dataset_test['Open']), axis=0)
+            inputs = dataset_total[len(dataset_total) - len(dataset_test) - 60:].values
+            inputs = inputs.reshape(-1, 1)
+
+            inputs = sc.transform(inputs)
+            X_test = []
+            for i in range(60, 80):
+                X_test.append(inputs[i-60:i, 0])
+            X_test = np.array(X_test)
+            X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
+            predicted_stock_price = regressor.predict(X_test)
+            predicted_stock_price = sc.inverse_transform(predicted_stock_price)
+            # plotting the figure
+            fig_rnn = Figure()
+            plt = fig_rnn.add_subplot(1, 1, 1)
+            plt.plot(real_stock_price, color='red', label='Real Google Stock Price')
+            plt.plot(predicted_stock_price, color='blue',
+                    label='Predicted Google Stock Price')
+            plt.set_title('Google Stock Price Prediction')
+            plt.set_xlabel('Time')
+            plt.set_ylabel('Google Stock Price')
+            fig_rnn.savefig('user/RNN1Graph.png')
+
+            image = Image.open('user/RNN1Graph.png')
+
+            st.image(image, caption='RNN')
 
 
 

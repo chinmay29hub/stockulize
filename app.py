@@ -184,18 +184,62 @@ if selected_y == "Upload Your Data":
             
 if selected_y == "Supported Companies":
     st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
-    comp = pd.read_csv('support.csv')
-    st.header("Supported Companies")
-    st.subheader("You can refer to the below data frame for getting the company sysmbol.")
+    st.subheader("Demo Graphs on Google Data")
+    selected_support = option_menu(
+        menu_title=None,
+        options=["Nasdaq", "Nse", "Bse"],
+        icons=["file-bar-graph", "file-bar-graph", "file-bar-graph"],
+        default_index=0,
+        orientation="horizontal",
+    )
 
-    col_list = list(comp["Name"])
-    col_list = tuple(col_list)
+    if selected_support == "Nasdaq":
+        comp = pd.read_csv('support/nasdaq.csv')
+        st.header("Supported Companies")
+        st.subheader("You can refer to the below data frame for getting the company symbol.")
 
-    option = st.selectbox(
-    'Choose the company', col_list)
+        col_list = list(comp["Name"])
+        col_list = tuple(col_list)
+
+        option = st.selectbox(
+        'Choose the company', col_list)
 
 
-    st.dataframe(comp)
+        st.dataframe(comp)
+
+    if selected_support == "Nse":
+        comp = pd.read_csv('support/nse.csv')
+        st.header("Supported Companies")
+        st.subheader("You can refer to the below data frame for getting the company symbol.")
+
+        col_list = list(comp["NAME OF COMPANY"])
+        col_list = tuple(col_list)
+
+        option = st.selectbox(
+        'Choose the company', col_list)
+
+
+        st.dataframe(comp)
+
+    if selected_support == "Bse":
+        st.markdown('![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&pause=1000&color=FF4B4B&width=200&lines=Hello+Techies;Fetch+Stocks;Visualize;%40chinmay29hub)')
+        comp = pd.read_csv('support/bse.csv')
+        st.header("Supported Companies")
+        st.subheader("You can refer to the below data frame for getting the company symbol.")
+
+        col_list = list(comp["Security Code"])
+        col_list = tuple(col_list)
+
+        option = st.selectbox(
+        'Choose the company', col_list)
+
+
+        st.dataframe(comp)
+
+    
+    
+    
+    
 
 if selected_y == "ANN":
     dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')

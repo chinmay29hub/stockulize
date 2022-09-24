@@ -57,7 +57,9 @@ if selected_y == "Home Page":
     )
 
     if selected_nav == "Home":
-        st.header("This is homepage")
+        st.header("Past,Present and Future")
+        st.subheader("See the history,current state and future of your favorite company.")
+        st.subheader("With easy to understand visual presentation of data and phenomenal prediction models,Make bold and confident decisions")
     if selected_nav == "About":
         st.header("This is about page")
     if selected_nav == "Github":
@@ -275,7 +277,7 @@ if selected_y == "RNN":
     dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')
     real_stock_price = dataset_test.iloc[:, 1:2].values
 
-    """### Getting the predicted stock price of 2017"""
+    """### Getting the predicted stock price"""
 
     dataset_total = pd.concat(
         (dataset_train['Open'], dataset_test['Open']), axis=0)
@@ -373,11 +375,11 @@ if selected_y == "ANN for user":
             y_pred = ann.predict(X_test)
             fig = Figure()
             plt = fig.add_subplot(1, 1, 1)
-            plt.plot(y_test, color='red', label='Real Google Stock Price')
-            plt.plot(y_pred, color='blue', label='Predicted Google Stock Price')
-            plt.set_title('Google Stock Price Prediction')
+            plt.plot(y_test, color='red', label='Real Stock Price')
+            plt.plot(y_pred, color='blue', label='Predicted Stock Price')
+            plt.set_title('Stock Price Prediction')
             plt.set_xlabel('Time')
-            plt.set_ylabel('Google Stock Price')
+            plt.set_ylabel('Stock Price')
             fig.savefig('user/annGraph.png')
             
             image = Image.open('user/annGraph.png')
@@ -394,18 +396,18 @@ if selected_y == "RNN for user":
             regressor = tf.keras.models.load_model('rnn_old.h5')
             dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
             # creating a numarray that contains the open price of the stock
-            trainig_set = dataset_train.iloc[:, 1:2].values
+            training_set = dataset_train.iloc[:, 1:2].values
 
             """### Feature Scaling"""
 
             # all stock prices will be between 0 and 1
             sc = MinMaxScaler(feature_range=(0, 1))
-            training_set_scaled = sc.fit_transform(trainig_set)
+            training_set_scaled = sc.fit_transform(training_set)
             dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
             dataset_test = pd.read_csv(data_file_user)
             real_stock_price = dataset_test.iloc[:, 1:2].values
 
-            """### Getting the predicted stock price of 2017"""
+            """### Getting the predicted stock price"""
 
             dataset_total = pd.concat(
                 (dataset_train['Open'], dataset_test['Open']), axis=0)
@@ -414,7 +416,7 @@ if selected_y == "RNN for user":
 
             inputs = sc.transform(inputs)
             X_test = []
-            for i in range(60, 80):
+            for i in range(60, 60+real_stock_price.size-1):
                 X_test.append(inputs[i-60:i, 0])
             X_test = np.array(X_test)
             X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
@@ -423,12 +425,12 @@ if selected_y == "RNN for user":
             # plotting the figure
             fig_rnn = Figure()
             plt = fig_rnn.add_subplot(1, 1, 1)
-            plt.plot(real_stock_price, color='red', label='Real Google Stock Price')
+            plt.plot(real_stock_price, color='red', label='Real Stock Price')
             plt.plot(predicted_stock_price, color='blue',
-                    label='Predicted Google Stock Price')
-            plt.set_title('Google Stock Price Prediction')
+                    label='Predicted Stock Price')
+            plt.set_title('Stock Price Prediction')
             plt.set_xlabel('Time')
-            plt.set_ylabel('Google Stock Price')
+            plt.set_ylabel('Stock Price')
             fig_rnn.savefig('user/RNN1Graph.png')
 
             image = Image.open('user/RNN1Graph.png')

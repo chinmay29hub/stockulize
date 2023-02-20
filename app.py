@@ -244,19 +244,25 @@ if selected_y == "Supported Companies":
     
 
 if selected_y == "ANN":
-    dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')
-    X_test = dataset_test.iloc[:-1, 1:2].values
-    y_test = dataset_test.iloc[1:, 1:2].values
-    ann = tf.keras.models.load_model('ann.h5')
-    y_pred = ann.predict(X_test)
-    fig = Figure()
-    plt = fig.add_subplot(1, 1, 1)
-    plt.plot(y_test, color='red', label='Real Google Stock Price')
-    plt.plot(y_pred, color='blue', label='Predicted Google Stock Price')
-    plt.set_title('Google Stock Price Prediction')
-    plt.set_xlabel('Time')
-    plt.set_ylabel('Google Stock Price')
-    fig.savefig('img/annGraph.png')
+    try:
+        dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')
+        X_test = dataset_test.iloc[:-1, 1:2].values
+        y_test = dataset_test.iloc[1:, 1:2].values
+        ann = tf.keras.models.load_model('ann.h5')
+        y_pred = ann.predict(X_test)
+        fig = Figure()
+        plt = fig.add_subplot(1, 1, 1)
+        plt.plot(y_test, color='red', label='Real Google Stock Price')
+        plt.plot(y_pred, color='blue', label='Predicted Google Stock Price')
+        plt.set_title('Google Stock Price Prediction')
+        plt.set_xlabel('Time')
+        plt.set_ylabel('Google Stock Price')
+        fig.savefig('img/annGraph.png')
+        print('ANN graph saved to img/annGraph.png')
+    except Exception as e:
+        print('An error occurred while running the ANN prediction:')
+        print(e)
+
     
     image = Image.open('img/annGraph.png')
 

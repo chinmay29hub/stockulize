@@ -46,7 +46,7 @@ Pillow==9.2.0
 plotly==5.10.0
 plotly-express==0.4.1
 protobuf==3.19.5
-pyarrow==9.0.0
+pyarrow==14.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pydeck==0.8.0b3

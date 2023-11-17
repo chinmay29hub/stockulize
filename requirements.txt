@@ -37,7 +37,7 @@ MarkupSafe==2.1.1
 matplotlib==3.6.0
 multitasking==0.0.11
 numpy==1.23.3
-oauthlib==3.2.1
+oauthlib==3.2.2
 opt-einsum==3.3.0
 packaging==21.3
 pandas==1.4.4

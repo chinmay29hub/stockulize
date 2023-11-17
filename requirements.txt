@@ -50,7 +50,7 @@ pyarrow==14.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pydeck==0.8.0b3
-Pygments==2.13.0
+Pygments==2.15.0
 Pympler==1.0.1
 pyparsing==3.0.9
 pyrsistent==0.18.1

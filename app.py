@@ -36,7 +36,7 @@ with st.sidebar:
     )
 
 df = pd.read_csv(
-    'GOOGL.csv',
+    'Google_Stock_Price_Test.csv',
     engine = 'python',
 
 )

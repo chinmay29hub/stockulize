@@ -65,7 +65,7 @@ scikit-learn
 scipy
 semver
 six
-sklearn
+scikit-learn
 smmap
 statsmodels
 streamlit
